@@ -119,12 +119,43 @@ public class CfClient : ICfClient
 
             var servicePlans = response.Resources.Where(x => x.Name == servicePlanType &&
                                                    x.BrokerCatalog?.BrokerCatalogMetadata?.AutoSubscription?.AppName == servicePlanName);
-            if (response == null || servicePlans.Count() != 1)
+            if (servicePlans.Count() != 1)
             {
                 throw new ServiceException($"There must be exactly one service plan with name {servicePlanName} and type {servicePlanType}");
             }
 
             return servicePlans.Single().Id;
+        }
+        catch (JsonException je)
+        {
+            throw new ServiceException(je.Message);
+        }
+    }
+
+    public async Task<Guid> GetSpace(string tenantName, CancellationToken cancellationToken)
+    {
+        var spaceName = $"{tenantName}-space";
+        var client = await _basicAuthTokenService.GetBasicAuthorizedLegacyClient<CfClient>(_settings, cancellationToken).ConfigureAwait(false);
+        var result = await client.GetAsync("/v3/spaces", cancellationToken)
+            .CatchingIntoServiceExceptionFor("get-space", HttpAsyncResponseMessageExtension.RecoverOptions.ALLWAYS).ConfigureAwait(false);
+        try
+        {
+            var response = await result.Content
+                .ReadFromJsonAsync<SpaceResponse>(JsonSerializerExtensions.Options, cancellationToken)
+                .ConfigureAwait(false);
+
+            if (response == null)
+            {
+                throw new ServiceException("response should never be null here");
+            }
+
+            var spaces = response.Resources.Where(x => x.Name == spaceName);
+            if (spaces.Count() != 1)
+            {
+                throw new ServiceException($"There must be exactly one space with name {spaceName}");
+            }
+
+            return spaces.Single().Id;
         }
         catch (JsonException je)
         {
@@ -163,7 +194,7 @@ public class CfClient : ICfClient
             }
 
             var name = $"{tenantName}-dim-instance";
-            var resources = response.Resources.Where(x => x.Name == name && x.Type == "managed" && (spaceId == null || x.Relationships.Space.Data.Id == spaceId.Value));
+            var resources = response.Resources.Where(x => x.Name == name && x.Type == "managed" && (spaceId == null || x.Relationships.Space.Data.Id == spaceId.Value) && x.LastOperation.State == "succeeded");
             if (resources.Count() != 1)
             {
                 throw new ServiceException($"There must be exactly one service instance");

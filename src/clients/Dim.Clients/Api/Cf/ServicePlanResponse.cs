@@ -52,11 +52,16 @@ public record ServiceInstanceResource(
     [property: JsonPropertyName("guid")] Guid Id,
     [property: JsonPropertyName("name")] string Name,
     [property: JsonPropertyName("type")] string Type,
-    [property: JsonPropertyName("relationships")] ServiceInstanceRelationship Relationships
+    [property: JsonPropertyName("relationships")] ServiceInstanceRelationship Relationships,
+    [property: JsonPropertyName("last_operation")] LastOperation LastOperation
 );
 
 public record ServiceInstanceRelationship(
     [property: JsonPropertyName("space")] ServiceInstanceRelationshipSpace Space
+);
+
+public record LastOperation(
+    [property: JsonPropertyName("state")] string State
 );
 
 public record ServiceInstanceRelationshipSpace(

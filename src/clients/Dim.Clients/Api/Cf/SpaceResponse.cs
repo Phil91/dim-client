@@ -17,16 +17,15 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+using System.Text.Json.Serialization;
+
 namespace Dim.Clients.Api.Cf;
 
-public interface ICfClient
-{
-    Task<Guid> CreateCloudFoundrySpace(string tenantName, CancellationToken cancellationToken);
-    Task AddSpaceRoleToUser(string type, string user, Guid spaceId, CancellationToken cancellationToken);
-    Task<Guid> GetServicePlan(string servicePlanName, string servicePlanType, CancellationToken cancellationToken);
-    Task<Guid> GetSpace(string tenantName, CancellationToken cancellationToken);
-    Task CreateDimServiceInstance(string tenantName, Guid spaceId, Guid servicePlanId, CancellationToken cancellationToken);
-    Task CreateServiceInstanceBindings(string tenantName, Guid spaceId, CancellationToken cancellationToken);
-    Task<Guid> GetServiceBinding(string tenantName, Guid spaceId, string bindingName, CancellationToken cancellationToken);
-    Task<ServiceCredentialBindingDetailResponse> GetServiceBindingDetails(Guid id, CancellationToken cancellationToken);
-}
+public record SpaceResponse(
+    [property: JsonPropertyName("resources")] IEnumerable<Space> Resources
+);
+
+public record Space(
+    [property: JsonPropertyName("guid")] Guid Id,
+    [property: JsonPropertyName("name")] string Name
+);

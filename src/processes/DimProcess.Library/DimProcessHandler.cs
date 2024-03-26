@@ -335,14 +335,9 @@ public class DimProcessHandler : IDimProcessHandler
 
     public async Task<(IEnumerable<ProcessStepTypeId>? nextStepTypeIds, ProcessStepStatusId stepStatusId, bool modified, string? processMessage)> CreateDimServiceInstance(string tenantName, Guid tenantId, CancellationToken cancellationToken)
     {
-        var spaceId = await _dimRepositories.GetInstance<ITenantRepository>().GetSpaceId(tenantId).ConfigureAwait(false);
-        if (spaceId == null)
-        {
-            throw new ConflictException("SpaceId must not be null.");
-        }
-
         var servicePlanId = await _cfClient.GetServicePlan("decentralized-identity-management", "standard", cancellationToken).ConfigureAwait(false);
-        await _cfClient.CreateDimServiceInstance(tenantName, spaceId.Value, servicePlanId, cancellationToken).ConfigureAwait(false);
+        var spaceId = await _cfClient.GetSpace(tenantName, cancellationToken).ConfigureAwait(false);
+        await _cfClient.CreateDimServiceInstance(tenantName, spaceId, servicePlanId, cancellationToken).ConfigureAwait(false);
 
         return new ValueTuple<IEnumerable<ProcessStepTypeId>?, ProcessStepStatusId, bool, string?>(
             Enumerable.Repeat(ProcessStepTypeId.CREATE_SERVICE_INSTANCE_BINDING, 1),
@@ -358,7 +353,7 @@ public class DimProcessHandler : IDimProcessHandler
         {
             throw new ConflictException("SpaceId must not be null.");
         }
-
+        
         await _cfClient.CreateServiceInstanceBindings(tenantName, spaceId.Value, cancellationToken).ConfigureAwait(false);
 
         return new ValueTuple<IEnumerable<ProcessStepTypeId>?, ProcessStepStatusId, bool, string?>(
