@@ -41,6 +41,7 @@ dim:
     readyness:
       path: "/ready"
   swaggerEnabled: false
+  rootDirectoryId: "00000000-0000-0000-0000-000000000000"
 
 migrations:
   name: "migrations"
@@ -76,13 +77,25 @@ processesworker:
     limits:
       cpu: 45m
       memory: 105M
-  iam:
-    scope: "openid"
-    grantType: "client_credentials"
-    # -- Provide client-id for IAM.
+  placeholder: "empty"
+  dim:
+    adminMail: "mail@example.org"
+    clientIdCisCentral: ""
+    clientSecretCisCentral: ""
+    authUrl: ""
+  subaccount:
+    # -- Url to the subaccount service api
+    baseUrl: ""
+  entitlement:
+    # -- Url to the entitlement service api
+    baseUrl: ""
+  cf:
     clientId: ""
-    # -- Client-secret for IAM client-id. Secret-key 'iam-client-secret'.
     clientSecret: ""
+    tokenAddress: ""
+    # -- Url to the cf service api
+    baseUrl: ""
+    grantType: "client_credentials"
   callback:
     scope: "openid"
     grantType: "client_credentials"
@@ -90,6 +103,9 @@ processesworker:
     clientId: ""
     # -- Client-secret for callback client-id. Secret-key 'callback-client-secret'.
     clientSecret: ""
+    tokenAddress: ""
+    # -- Url to the cf service api
+    baseAddress: ""
 
 # -- Secret containing the client-secrets for the connection to portal and wallet
 # as well as encryptionKeys for dim.credential and processesworker.wallet
