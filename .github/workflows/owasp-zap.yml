@@ -98,7 +98,7 @@ jobs:
           helm dependency build
 
       - name: Install the chart on KinD cluster
-        run: helm install testing -n apps --create-namespace --wait --set issuer.image.name=kind-registry:5000/dim-service --set issuer.image.tag=testing --set migrations.image.name=kind-registry:5000/dim-migrations --set migrations.image.tag=testing --set processesworker.image.name=kind-registry:5000/dim-processes-worker --set processesworker.image.tag=testing --set issuer.swaggerEnabled=true charts/dim
+        run: helm install testing -n apps --create-namespace --wait --set dim.image.name=kind-registry:5000/dim-service --set dim.image.tag=testing --set migrations.image.name=kind-registry:5000/dim-migrations --set migrations.image.tag=testing --set processesworker.image.name=kind-registry:5000/dim-processes-worker --set processesworker.image.tag=testing --set dim.swaggerEnabled=true charts/dim
 
       - name: Configure port forward to app in KinD
         run: |
