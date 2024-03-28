@@ -11,7 +11,7 @@ The referenced container images are for demonstration purposes only.
 To install the chart with the release name `dim`:
 
 ```shell
-$ helm repo add dim-repo https://dim-repo.github.io
+$ helm repo add dim-repo https://github.com/Phil91/dim-client
 $ helm install dim dim-repo/dim
 ```
 
@@ -26,8 +26,8 @@ To use the helm chart as a dependency:
 ```yaml
 dependencies:
   - name: dim
-    repository: https://dim-repo.github.io
-    version: 1.0.0-rc.1
+    repository: https://github.com/Phil91/dim-client
+    version: 0.0.1
 ```
 
 ## Requirements
@@ -43,13 +43,14 @@ dependencies:
 | dim.image.name | string | `"ghcr.io/dim-repo/dim-service"` |  |
 | dim.image.tag | string | `""` |  |
 | dim.imagePullPolicy | string | `"IfNotPresent"` |  |
-| dim.resources | object | `{"limits":{"cpu":"45m","memory":"400M"},"requests":{"cpu":"15m","memory":"400M"}}` | We recommend to review the default resource limits as this should a conscious choice. |
+| dim.resources | object | `{"limits":{"cpu":"45m","memory":"200M"},"requests":{"cpu":"15m","memory":"200M"}}` | We recommend to review the default resource limits as this should a conscious choice. |
 | dim.healthChecks.startup.path | string | `"/health/startup"` |  |
 | dim.healthChecks.startup.tags[0].name | string | `"HEALTHCHECKS__0__TAGS__1"` |  |
 | dim.healthChecks.startup.tags[0].value | string | `"dimdb"` |  |
 | dim.healthChecks.liveness.path | string | `"/healthz"` |  |
 | dim.healthChecks.readyness.path | string | `"/ready"` |  |
 | dim.swaggerEnabled | bool | `false` |  |
+| dim.rootDirectoryId | string | `"00000000-0000-0000-0000-000000000000"` |  |
 | migrations.name | string | `"migrations"` |  |
 | migrations.image.name | string | `"ghcr.io/dim-repo/dim-migrations"` |  |
 | migrations.image.tag | string | `""` |  |
@@ -63,15 +64,24 @@ dependencies:
 | processesworker.image.tag | string | `""` |  |
 | processesworker.imagePullPolicy | string | `"IfNotPresent"` |  |
 | processesworker.resources | object | `{"limits":{"cpu":"45m","memory":"105M"},"requests":{"cpu":"15m","memory":"105M"}}` | We recommend to review the default resource limits as this should a conscious choice. |
-| processesworker.iam.scope | string | `"openid"` |  |
-| processesworker.iam.grantType | string | `"client_credentials"` |  |
-| processesworker.iam.clientId | string | `""` | Provide client-id for IAM. |
-| processesworker.iam.clientSecret | string | `""` | Client-secret for IAM client-id. Secret-key 'iam-client-secret'. |
+| processesworker.dim.adminMail | string | `"mail@example.org"` |  |
+| processesworker.dim.clientIdCisCentral | string | `""` |  |
+| processesworker.dim.clientSecretCisCentral | string | `""` |  |
+| processesworker.dim.authUrl | string | `""` |  |
+| processesworker.subaccount.baseUrl | string | `""` | Url to the subaccount service api |
+| processesworker.entitlement.baseUrl | string | `""` | Url to the entitlement service api |
+| processesworker.cf.clientId | string | `""` |  |
+| processesworker.cf.clientSecret | string | `""` |  |
+| processesworker.cf.tokenAddress | string | `""` |  |
+| processesworker.cf.baseUrl | string | `""` | Url to the cf service api |
+| processesworker.cf.grantType | string | `"client_credentials"` |  |
 | processesworker.callback.scope | string | `"openid"` |  |
 | processesworker.callback.grantType | string | `"client_credentials"` |  |
 | processesworker.callback.clientId | string | `""` | Provide client-id for callback. |
 | processesworker.callback.clientSecret | string | `""` | Client-secret for callback client-id. Secret-key 'callback-client-secret'. |
-| existingSecret | string | `""` | Secret containing the client-secrets for the connection to portal and wallet as well as encryptionKeys for dim.credential and processesworker.wallet |
+| processesworker.callback.tokenAddress | string | `""` |  |
+| processesworker.callback.baseAddress | string | `""` | Url to the cf service api |
+| existingSecret | string | `""` | Secret containing "client-secret-cis-central", "client-secret-cf" and "client-secret-callback" |
 | dotnetEnvironment | string | `"Production"` |  |
 | dbConnection.schema | string | `"dim"` |  |
 | dbConnection.sslMode | string | `"Disable"` |  |
@@ -96,7 +106,6 @@ dependencies:
 | externalDatabase.database | string | `"dim"` | Database name. |
 | externalDatabase.password | string | `""` | Password for the non-root username (default 'dim'). Secret-key 'password'. |
 | externalDatabase.existingSecret | string | `"dim-external-db"` | Secret containing the password non-root username, (default 'dim'). |
-| externalDatabase.existingSecretPasswordKey | string | `"password"` | Name of an existing secret key containing the database credentials. |
 | ingress.enabled | bool | `false` | DIM ingress parameters, enable ingress record generation for dim. |
 | ingress.tls[0] | object | `{"hosts":[""],"secretName":""}` | Provide tls secret. |
 | ingress.tls[0].hosts | list | `[""]` | Provide host for tls secret. |

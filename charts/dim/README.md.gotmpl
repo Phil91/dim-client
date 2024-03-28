@@ -11,7 +11,7 @@ The referenced container images are for demonstration purposes only.
 To install the chart with the release name `{{ template "chart.name" . }}`:
 
 ```shell
-$ helm repo add dim-repo https://dim-repo.github.io
+$ helm repo add dim-repo https://github.com/Phil91/dim-client
 $ helm install {{ template "chart.name" . }} dim-repo/{{ template "chart.name" . }}
 ```
 
@@ -26,7 +26,7 @@ To use the helm chart as a dependency:
 ```yaml
 dependencies:
   - name: {{ template "chart.name" . }}
-    repository: https://dim-repo.github.io
+    repository: https://github.com/Phil91/dim-client
     version: {{ template "chart.version" . }}
 ```
 
