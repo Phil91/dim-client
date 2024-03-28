@@ -2,29 +2,7 @@
 
 This repository contains the backend code for the DIM Middle Layer written in C#.
 
-## Installation
-
-To install the chart with the release name `dim`:
-
-```shell
-$ helm repo add dim-repo https://github.com/Phil91/dim-client
-$ helm install dim dim-repo/dim
-```
-
-To install the helm chart into your cluster with your values:
-
-```shell
-$ helm install -f your-values.yaml dim dim-repo/dim
-```
-
-To use the helm chart as a dependency:
-
-```yaml
-dependencies:
-  - name: dim
-    repository: https://github.com/Phil91/dim-client
-    version: 0.0.1
-```
+For **installation** details and further information, please refer to the chart specific [README](./charts/dim/README.md).
 
 ## How to build and run
 
