@@ -28,7 +28,7 @@ spec:
   source:
     path: charts/dim
     repoURL: 'https://github.com/phil91/dim-client.git'
-    targetRevision: dim-1.0.0-rc.1
+    targetRevision: dim-0.0.1
     plugin:
       env:
         - name: AVP_SECRET
