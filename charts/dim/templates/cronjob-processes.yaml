@@ -73,7 +73,10 @@ spec:
             - name: "DIM__CLIENTIDCISCENTRAL"
               value: "{{ .Values.processesworker.dim.clientIdCisCentral }}"
             - name: "DIM__CLIENTSECRETCISCENTRAL"
-              value: "{{ .Values.processesworker.dim.clientSecretCisCentral }}"
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ template "dim.secretName" . }}"
+                  key: "client-secret-cis-central"
             - name: "DIM__AUTHURL"
               value: "{{ .Values.processesworker.dim.authUrl }}"
             - name: "SUBACCOUNT__BASEURL"
@@ -83,7 +86,10 @@ spec:
             - name: "CF__CLIENTID"
               value: "{{ .Values.processesworker.cf.clientId }}"
             - name: "CF__CLIENTSECRET"
-              value: "{{ .Values.processesworker.cf.clientSecret }}"
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ template "dim.secretName" . }}"
+                  key: "client-secret-cf"
             - name: "CF__TOKENADDRESS"
               value: "{{ .Values.processesworker.cf.tokenAddress }}"
             - name: "CF__BASEURL"
@@ -91,13 +97,16 @@ spec:
             - name: "CF__GRANTTYPE"
               value: "{{ .Values.processesworker.cf.grantType }}"
             - name: "CALLBACK__USERNAME"
-              value: "{{ .Values.processesworker.placeholder }}"
+              value: "empty"
             - name: "CALLBACK__PASSWORD"
-              value: "{{ .Values.processesworker.placeholder }}"
+              value: "empty"
             - name: "CALLBACK__CLIENTID"
               value: "{{ .Values.processesworker.callback.clientId }}"
             - name: "CALLBACK__CLIENTSECRET"
-              value: "{{ .Values.processesworker.callback.clientSecret }}"
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ template "dim.secretName" . }}"
+                  key: "client-secret-callback"
             - name: "CALLBACK__GRANTTYPE"
               value: "{{ .Values.processesworker.callback.grantType }}"
             - name: "CALLBACK__SCOPE"

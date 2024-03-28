@@ -26,10 +26,10 @@ dim:
   resources:
     requests:
       cpu: 15m
-      memory: 400M
+      memory: 200M
     limits:
       cpu: 45m
-      memory: 400M
+      memory: 200M
   healthChecks:
     startup:
       path: "/health/startup"
@@ -77,7 +77,6 @@ processesworker:
     limits:
       cpu: 45m
       memory: 105M
-  placeholder: "empty"
   dim:
     adminMail: "mail@example.org"
     clientIdCisCentral: ""
@@ -107,8 +106,7 @@ processesworker:
     # -- Url to the cf service api
     baseAddress: ""
 
-# -- Secret containing the client-secrets for the connection to portal and wallet
-# as well as encryptionKeys for dim.credential and processesworker.wallet
+# -- Secret containing "client-secret-cis-central", "client-secret-cf" and "client-secret-callback"
 existingSecret: ""
 
 dotnetEnvironment: "Production"
@@ -173,8 +171,6 @@ externalDatabase:
   password: ""
   # -- Secret containing the password non-root username, (default 'dim').
   existingSecret: "dim-external-db"
-  # -- Name of an existing secret key containing the database credentials.
-  existingSecretPasswordKey: "password"
 
 ingress:
   # -- DIM ingress parameters,

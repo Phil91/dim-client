@@ -79,7 +79,7 @@ spec:
           value: "{{ .Values.dim.healthChecks.liveness.path}}"
         - name: "SWAGGERENABLED"
           value: "{{ .Values.dim.swaggerEnabled }}"
-        - name:
+        - name: "DIM__ROOTDIRECTORYID"
           value: "{{ .Values.dim.rootDirectoryId }}" 
         ports:
         - name: http
