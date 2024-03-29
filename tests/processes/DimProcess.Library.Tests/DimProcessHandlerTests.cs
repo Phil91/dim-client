@@ -33,6 +33,7 @@ using DimProcess.Library.Callback;
 using DimProcess.Library.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Org.Eclipse.TractusX.Portal.Backend.Framework.ErrorHandling;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 
 namespace DimProcess.Library.Tests;
@@ -572,27 +573,12 @@ public class DimProcessHandlerTests
     #region CreateDimServiceInstance
 
     [Fact]
-    public async Task CreateDimServiceInstance_WithNotExisting_ReturnsExpected()
-    {
-        // Arrange
-        A.CallTo(() => _tenantRepositories.GetSpaceId(_tenantId))
-            .Returns((Guid?)null);
-        async Task Act() => await _sut.CreateDimServiceInstance(_tenantName, _tenantId, CancellationToken.None).ConfigureAwait(false);
-
-        // Act
-        var ex = await Assert.ThrowsAsync<ConflictException>(Act);
-
-        // Assert
-        ex.Message.Should().Be("SpaceId must not be null.");
-    }
-
-    [Fact]
     public async Task CreateDimServiceInstance_WithValidData_ReturnsExpected()
     {
         // Arrange
         var spaceId = Guid.NewGuid();
         var servicePlanId = Guid.NewGuid();
-        A.CallTo(() => _tenantRepositories.GetSpaceId(_tenantId))
+        A.CallTo(() => _cfClient.GetSpace(_tenantName, A<CancellationToken>._))
             .Returns(spaceId);
         A.CallTo(() => _cfClient.GetServicePlan("decentralized-identity-management", "standard", A<CancellationToken>._))
             .Returns(servicePlanId);

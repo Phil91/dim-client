@@ -52,7 +52,7 @@ public class DimProcessTypeExecutor : IProcessTypeExecutor
         ProcessStepTypeId.SEND_CALLBACK);
 
     private Guid _tenantId;
-    private string _tenantName;
+    private string? _tenantName;
 
     public DimProcessTypeExecutor(
         IDimRepositories dimRepositories,
@@ -82,7 +82,7 @@ public class DimProcessTypeExecutor : IProcessTypeExecutor
 
     public async ValueTask<IProcessTypeExecutor.StepExecutionResult> ExecuteProcessStep(ProcessStepTypeId processStepTypeId, IEnumerable<ProcessStepTypeId> processStepTypeIds, CancellationToken cancellationToken)
     {
-        if (_tenantId == Guid.Empty || _tenantName == default)
+        if (_tenantId == Guid.Empty || _tenantName is null)
         {
             throw new UnexpectedConditionException("tenantId and tenantName should never be empty here");
         }
@@ -135,14 +135,14 @@ public class DimProcessTypeExecutor : IProcessTypeExecutor
         }
         catch (Exception ex) when (ex is not SystemException)
         {
-            (stepStatusId, processMessage, nextStepTypeIds) = ProcessError(ex, processStepTypeId);
+            (stepStatusId, processMessage, nextStepTypeIds) = ProcessError(ex);
             modified = true;
         }
 
         return new IProcessTypeExecutor.StepExecutionResult(modified, stepStatusId, nextStepTypeIds, null, processMessage);
     }
 
-    private static (ProcessStepStatusId StatusId, string? ProcessMessage, IEnumerable<ProcessStepTypeId>? nextSteps) ProcessError(Exception ex, ProcessStepTypeId processStepTypeId)
+    private static (ProcessStepStatusId StatusId, string? ProcessMessage, IEnumerable<ProcessStepTypeId>? nextSteps) ProcessError(Exception ex)
     {
         return ex switch
         {

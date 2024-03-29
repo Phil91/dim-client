@@ -353,7 +353,7 @@ public class DimProcessHandler : IDimProcessHandler
         {
             throw new ConflictException("SpaceId must not be null.");
         }
-        
+
         await _cfClient.CreateServiceInstanceBindings(tenantName, spaceId.Value, cancellationToken).ConfigureAwait(false);
 
         return new ValueTuple<IEnumerable<ProcessStepTypeId>?, ProcessStepStatusId, bool, string?>(
