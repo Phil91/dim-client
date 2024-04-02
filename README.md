@@ -7,7 +7,7 @@ This repository contains the backend code for the DIM Middle Layer written in C#
 To install the chart with the release name `dim`:
 
 ```shell
-$ helm repo add dim-repo https://github.com/Phil91/dim-client
+$ helm repo add dim-repo https://phil91.github.io/dim-client
 $ helm install dim dim-repo/dim
 ```
 
@@ -22,7 +22,7 @@ To use the helm chart as a dependency:
 ```yaml
 dependencies:
   - name: dim
-    repository: https://github.com/Phil91/dim-client
+    repository: https://phil91.github.io/dim-client
     version: 0.0.1
 ```
 
