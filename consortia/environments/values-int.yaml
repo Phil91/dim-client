@@ -60,7 +60,7 @@ processesworker:
     # -- Url to the entitlement service api
     baseUrl: "https://entitlements-service.cfapps.eu10.hana.ondemand.com"
   cf:
-    clientId: "<path:portal/data/dim/cf#clientId>"
+    clientId: "<path:portal/data/dim/int/cf#clientId>"
     clientSecret: "<path:portal/data/dim/int/cf#clientSecret>"
     tokenAddress: "https://login.cf.eu10.hana.ondemand.com/oauth/token"
     # -- Url to the cf service api
@@ -81,7 +81,7 @@ idp:
   address: "https://centralidp.int.demo.catena-x.net"
   jwtBearerOptions:
     tokenValidationParameters:
-      validAudience: "Cl25-CX-Dim"
+      validAudience: "DIM-Middle-Layer"
 
 postgresql:
   auth:
