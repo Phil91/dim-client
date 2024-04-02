@@ -18,8 +18,10 @@
  ********************************************************************************/
 
 using Dim.DbAccess.DependencyInjection;
+using Dim.Web.Authentication;
 using Dim.Web.Controllers;
 using Dim.Web.Extensions;
+using Microsoft.AspNetCore.Authentication;
 using Org.Eclipse.TractusX.Portal.Backend.Framework.Web;
 using System.Text.Json.Serialization;
 
@@ -30,6 +32,7 @@ WebApplicationBuildRunner
         builder =>
         {
             builder.Services
+                .AddTransient<IClaimsTransformation, KeycloakClaimsTransformation>()
                 .AddDim(builder.Configuration.GetSection("Dim"))
                 .AddEndpointsApiExplorer()
                 .AddDatabase(builder.Configuration)

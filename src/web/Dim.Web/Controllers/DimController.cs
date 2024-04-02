@@ -38,6 +38,7 @@ public static class DimController
                 "the name of the company",
                 "bpn of the wallets company",
                 "The did document location")
+            .RequireAuthorization(r => r.RequireRole("setup_wallet"))
             .Produces(StatusCodes.Status201Created);
 
         policyHub.MapPost("setup-issuer", ([FromQuery] string companyName, [FromQuery] string bpn, [FromQuery] string didDocumentLocation, IDimBusinessLogic dimBusinessLogic) => dimBusinessLogic.StartSetupDim(companyName, bpn, didDocumentLocation, true))
@@ -46,6 +47,7 @@ public static class DimController
                 "the name of the company",
                 "bpn of the wallets company",
                 "The did document location")
+            .RequireAuthorization(r => r.RequireRole("setup_wallet"))
             .Produces(StatusCodes.Status201Created);
 
         return group;
