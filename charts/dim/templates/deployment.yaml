@@ -80,7 +80,17 @@ spec:
         - name: "SWAGGERENABLED"
           value: "{{ .Values.dim.swaggerEnabled }}"
         - name: "DIM__ROOTDIRECTORYID"
-          value: "{{ .Values.dim.rootDirectoryId }}" 
+          value: "{{ .Values.dim.rootDirectoryId }}"
+        - name: "JWTBEAREROPTIONS__METADATAADDRESS"
+          value: "{{ .Values.idp.address }}{{ .Values.idp.jwtBearerOptions.metadataPath }}"
+        - name: "JWTBEAREROPTIONS__REQUIREHTTPSMETADATA"
+          value: "{{ .Values.idp.jwtBearerOptions.requireHttpsMetadata }}"
+        - name: "JWTBEAREROPTIONS__TOKENVALIDATIONPARAMETERS__VALIDAUDIENCE"
+          value: "{{ .Values.idp.jwtBearerOptions.tokenValidationParameters.validAudience }}"
+        - name: "JWTBEAREROPTIONS__TOKENVALIDATIONPARAMETERS__VALIDISSUER"
+          value: "{{ .Values.idp.address }}{{ .Values.idp.jwtBearerOptions.tokenValidationParameters.validIssuerPath }}"
+        - name: "JWTBEAREROPTIONS__REFRESHINTERVAL"
+          value: "{{ .Values.idp.jwtBearerOptions.refreshInterval }}"
         ports:
         - name: http
           containerPort: {{ .Values.portContainer }}

@@ -77,6 +77,12 @@ processesworker:
     # -- Url to the cf service api
     baseAddress: "https://portal-backend.dev.demo.catena-x.net/api/administration/registration/dim/"
 
+idp:
+  address: "https://centralidp.int.demo.catena-x.net"
+  jwtBearerOptions:
+    tokenValidationParameters:
+      validAudience: "Cl25-CX-Dim"
+
 postgresql:
   auth:
     postgrespassword: "<path:portal/data/dim/int/postgres#postgres-password>"
