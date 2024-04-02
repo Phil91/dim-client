@@ -150,6 +150,11 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        with:
+          fetch-depth: 0
+
       - name: Create and push git tag
         run: |
           git tag v${{ needs.release-images.outputs.app-version }}
