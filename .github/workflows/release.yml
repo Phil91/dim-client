@@ -74,23 +74,25 @@ jobs:
             dockerfile: docker/Dockerfile-dim-migrations
           - image: ghcr.io/${{ github.repository }}_dim-processes-worker
             dockerfile: docker/Dockerfile-dim-processes-worker
+    outputs:
+      app-version: ${{ steps.app-version.outputs.current }}
     steps:
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           fetch-depth: 0
 
-      - name: Get current helm chart version
-        id: chart-version
+      - name: Get current appVersion
+        id: app-version
         run: |
-          current=$(cat ./charts/dim/Chart.yaml | grep "version:" | head -1 | cut -d ":" -d " " -f2)
+          current=$(cat ./charts/dim/Chart.yaml | grep "appVersion:" | head -1 | cut -d ":" -d " " -f2)
           echo "current=$current" >> $GITHUB_OUTPUT
-          echo "Exported $current helm chart version"
+          echo "Exported $current appVersion"
 
       - name: Check for previous version
         id: version-check
         run: |
-          exists=$(git tag -l "v${{ steps.chart-version.outputs.current }}")
+          exists=$(git tag -l "v${{ steps.app-version.outputs.current }}")
           if [[ -n "$exists" ]]; then
             echo "exists=true" >> $GITHUB_OUTPUT
           else
@@ -125,9 +127,9 @@ jobs:
              type=ref,event=branch
              type=ref,event=pr
              type=raw,value=latest
-             type=semver,pattern={{version}},value=${{ steps.chart-version.outputs.current }}
-             type=semver,pattern={{major}},value=${{ steps.chart-version.outputs.current }}
-             type=semver,pattern={{major}}.{{minor}},value=${{ steps.chart-version.outputs.current }}
+             type=semver,pattern={{version}},value=${{ steps.app-version.outputs.current }}
+             type=semver,pattern={{major}},value=${{ steps.app-version.outputs.current }}
+             type=semver,pattern={{major}}.{{minor}},value=${{ steps.app-version.outputs.current }}
         if: steps.version-check.outputs.exists == 'false'
 
       - name: Build and push Docker images
@@ -142,8 +144,13 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
         if: steps.version-check.outputs.exists == 'false'
 
+  create-tag:
+    needs: release-images
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
       - name: Create and push git tag
         run: |
-          git tag v${{ steps.chart-version.outputs.current }}
-          git push origin v${{ steps.chart-version.outputs.current }}
-        if: steps.version-check.outputs.exists == 'false'
+          git tag v${{ needs.release-images.outputs.app-version }}
+          git push origin v${{ needs.release-images.outputs.app-version }}

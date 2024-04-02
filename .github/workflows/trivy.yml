@@ -93,7 +93,7 @@ jobs:
         uses: aquasecurity/trivy-action@062f2592684a31eb3aa050cc61e7ca1451cecd3d # v0.18.0
         with:
           # Path to Docker image
-          image-ref: "${{ env.REGISTRY}}/${{ env.IMAGE_NAME_SERVICE}}:dev"
+          image-ref: "${{ env.REGISTRY}}/${{ env.IMAGE_NAME_SERVICE}}:main"
           format: "sarif"
           output: "trivy-results2.sarif"
           vuln-type: "os,library"
@@ -125,7 +125,7 @@ jobs:
         uses: aquasecurity/trivy-action@062f2592684a31eb3aa050cc61e7ca1451cecd3d # v0.18.0
         with:
           # Path to Docker image
-          image-ref: "${{ env.REGISTRY}}/${{ env.IMAGE_NAME_MIGRATIONS}}:dev"
+          image-ref: "${{ env.REGISTRY}}/${{ env.IMAGE_NAME_MIGRATIONS}}:main"
           format: "sarif"
           output: "trivy-results3.sarif"
           vuln-type: "os,library"
@@ -157,7 +157,7 @@ jobs:
         uses: aquasecurity/trivy-action@062f2592684a31eb3aa050cc61e7ca1451cecd3d # v0.18.0
         with:
           # Path to Docker image
-          image-ref: "${{ env.REGISTRY}}/${{ env.IMAGE_NAME_WORKER}}:dev"
+          image-ref: "${{ env.REGISTRY}}/${{ env.IMAGE_NAME_WORKER}}:main"
           format: "sarif"
           output: "trivy-results4.sarif"
           vuln-type: "os,library"
