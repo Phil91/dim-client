@@ -42,6 +42,7 @@ dim:
       path: "/ready"
   swaggerEnabled: false
   rootDirectoryId: "00000000-0000-0000-0000-000000000000"
+  operatorId: "00000000-0000-0000-0000-000000000000"
 
 migrations:
   name: "migrations"

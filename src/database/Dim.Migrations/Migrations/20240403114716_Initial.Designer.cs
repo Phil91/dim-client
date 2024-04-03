@@ -31,8 +31,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Dim.Migrations.Migrations
 {
     [DbContext(typeof(DimDbContext))]
-    [Migration("20240307101150_initial")]
-    partial class initial
+    [Migration("20240403114716_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -267,6 +267,11 @@ namespace Dim.Migrations.Migrations
                         new
                         {
                             Id = 17,
+                            Label = "CREATE_STATUS_LIST"
+                        },
+                        new
+                        {
+                            Id = 18,
                             Label = "SEND_CALLBACK"
                         });
                 });
