@@ -11,7 +11,7 @@ The referenced container images are for demonstration purposes only.
 To install the chart with the release name `dim`:
 
 ```shell
-$ helm repo add dim-repo https://github.com/Phil91/dim-client
+$ helm repo add dim-repo https://phil91.github.io/dim-client
 $ helm install dim dim-repo/dim
 ```
 
@@ -26,7 +26,7 @@ To use the helm chart as a dependency:
 ```yaml
 dependencies:
   - name: dim
-    repository: https://github.com/Phil91/dim-client
+    repository: https://phil91.github.io/dim-client
     version: 0.0.1
 ```
 
@@ -40,7 +40,7 @@ dependencies:
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| dim.image.name | string | `"ghcr.io/dim-repo/dim-service"` |  |
+| dim.image.name | string | `"ghcr.io/phil91/dim-client_dim-service"` |  |
 | dim.image.tag | string | `""` |  |
 | dim.imagePullPolicy | string | `"IfNotPresent"` |  |
 | dim.resources | object | `{"limits":{"cpu":"45m","memory":"200M"},"requests":{"cpu":"15m","memory":"200M"}}` | We recommend to review the default resource limits as this should a conscious choice. |
@@ -52,7 +52,7 @@ dependencies:
 | dim.swaggerEnabled | bool | `false` |  |
 | dim.rootDirectoryId | string | `"00000000-0000-0000-0000-000000000000"` |  |
 | migrations.name | string | `"migrations"` |  |
-| migrations.image.name | string | `"ghcr.io/dim-repo/dim-migrations"` |  |
+| migrations.image.name | string | `"ghcr.io/phil91/dim-client_dim-migrations"` |  |
 | migrations.image.tag | string | `""` |  |
 | migrations.imagePullPolicy | string | `"IfNotPresent"` |  |
 | migrations.resources | object | `{"limits":{"cpu":"45m","memory":"105M"},"requests":{"cpu":"15m","memory":"105M"}}` | We recommend to review the default resource limits as this should a conscious choice. |
@@ -60,7 +60,7 @@ dependencies:
 | migrations.seeding.testDataPaths | string | `"Seeder/Data"` |  |
 | migrations.logging.default | string | `"Information"` |  |
 | processesworker.name | string | `"processesworker"` |  |
-| processesworker.image.name | string | `"ghcr.io/dim-repo/dim-processes-worker"` |  |
+| processesworker.image.name | string | `"ghcr.io/phil91/dim-client_dim-processes-worker"` |  |
 | processesworker.image.tag | string | `""` |  |
 | processesworker.imagePullPolicy | string | `"IfNotPresent"` |  |
 | processesworker.resources | object | `{"limits":{"cpu":"45m","memory":"105M"},"requests":{"cpu":"15m","memory":"105M"}}` | We recommend to review the default resource limits as this should a conscious choice. |
@@ -106,6 +106,9 @@ dependencies:
 | externalDatabase.database | string | `"dim"` | Database name. |
 | externalDatabase.password | string | `""` | Password for the non-root username (default 'dim'). Secret-key 'password'. |
 | externalDatabase.existingSecret | string | `"dim-external-db"` | Secret containing the password non-root username, (default 'dim'). |
+| idp | object | `{"address":"https://centralidp.example.org","authRealm":"CX-Central","jwtBearerOptions":{"metadataPath":"/auth/realms/CX-Central/.well-known/openid-configuration","refreshInterval":"00:00:30","requireHttpsMetadata":"true","tokenValidationParameters":{"validAudience":"Cl25-CX-Dim","validIssuerPath":"/auth/realms/CX-Central"}},"tokenPath":"/auth/realms/CX-Central/protocol/openid-connect/token","useAuthTrail":true}` | Provide details about idp instance. |
+| idp.address | string | `"https://centralidp.example.org"` | Provide idp base address, without trailing '/auth'. |
+| idp.useAuthTrail | bool | `true` | Flag if the api should be used with an leading /auth path |
 | ingress.enabled | bool | `false` | DIM ingress parameters, enable ingress record generation for dim. |
 | ingress.tls[0] | object | `{"hosts":[""],"secretName":""}` | Provide tls secret. |
 | ingress.tls[0].hosts | list | `[""]` | Provide host for tls secret. |
