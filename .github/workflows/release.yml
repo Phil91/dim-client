@@ -69,11 +69,11 @@ jobs:
       matrix:
         include:
           - image: ghcr.io/${{ github.repository }}_dim-service
-            dockerfile: docker/Dockerfile-dim-service
+            dockerfile: ./docker/Dockerfile-dim-service
           - image: ghcr.io/${{ github.repository }}_dim-migrations
-            dockerfile: docker/Dockerfile-dim-migrations
+            dockerfile: ./docker/Dockerfile-dim-migrations
           - image: ghcr.io/${{ github.repository }}_dim-processes-worker
-            dockerfile: docker/Dockerfile-dim-processes-worker
+            dockerfile: ./docker/Dockerfile-dim-processes-worker
     outputs:
       app-version: ${{ steps.app-version.outputs.current }}
       version-check: ${{ steps.version-check.outputs.exists }}
