@@ -20,6 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\clients\Dim.Clients\Dim.Clients.csproj" />
       <ProjectReference Include="..\..\database\Dim.DbAccess\Dim.DbAccess.csproj" />
     </ItemGroup>
 

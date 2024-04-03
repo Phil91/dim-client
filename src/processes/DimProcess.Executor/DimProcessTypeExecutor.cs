@@ -48,6 +48,7 @@ public class DimProcessTypeExecutor : IProcessTypeExecutor
         ProcessStepTypeId.GET_DIM_DETAILS,
         ProcessStepTypeId.CREATE_APPLICATION,
         ProcessStepTypeId.CREATE_COMPANY_IDENTITY,
+        ProcessStepTypeId.CREATE_STATUS_LIST,
         ProcessStepTypeId.ASSIGN_COMPANY_APPLICATION,
         ProcessStepTypeId.SEND_CALLBACK);
 
@@ -126,9 +127,11 @@ public class DimProcessTypeExecutor : IProcessTypeExecutor
                     .ConfigureAwait(false),
                 ProcessStepTypeId.CREATE_COMPANY_IDENTITY => await _dimProcessHandler.CreateCompanyIdentity(_tenantId, _tenantName, cancellationToken)
                     .ConfigureAwait(false),
-                ProcessStepTypeId.ASSIGN_COMPANY_APPLICATION => await _dimProcessHandler.AssignCompanyApplication(_tenantId, _tenantName, cancellationToken)
+                ProcessStepTypeId.CREATE_STATUS_LIST => await _dimProcessHandler.CreateStatusList(_tenantId, cancellationToken)
                     .ConfigureAwait(false),
-                ProcessStepTypeId.SEND_CALLBACK => await _dimProcessHandler.SendCallback(_tenantId, _tenantName, cancellationToken)
+                ProcessStepTypeId.ASSIGN_COMPANY_APPLICATION => await _dimProcessHandler.AssignCompanyApplication(_tenantId, cancellationToken)
+                    .ConfigureAwait(false),
+                ProcessStepTypeId.SEND_CALLBACK => await _dimProcessHandler.SendCallback(_tenantId, cancellationToken)
                     .ConfigureAwait(false),
                 _ => (null, ProcessStepStatusId.TODO, false, null)
             };

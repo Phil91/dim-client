@@ -43,6 +43,7 @@ dim:
   imagePullPolicy: "Always"
   swaggerEnabled: true
   rootDirectoryId: "27fee02a-e265-4cfc-af70-4f217a33840b"
+  operatorId: "27fee02a-e265-4cfc-af70-4f217a33840b"
 
 migrations:
   image:

@@ -27,7 +27,7 @@ using System;
 namespace Dim.Migrations.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -202,7 +202,8 @@ namespace Dim.Migrations.Migrations
                     { 14, "CREATE_APPLICATION" },
                     { 15, "CREATE_COMPANY_IDENTITY" },
                     { 16, "ASSIGN_COMPANY_APPLICATION" },
-                    { 17, "SEND_CALLBACK" }
+                    { 17, "CREATE_STATUS_LIST" },
+                    { 18, "SEND_CALLBACK" }
                 });
 
             migrationBuilder.InsertData(
