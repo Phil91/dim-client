@@ -142,7 +142,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
   create-tag:
-    needs: release-images
+    needs: [release-helm-chart, release-images]
     if: needs.release-helm-chart.outputs.version-check == 'false'
     permissions:
       contents: write
