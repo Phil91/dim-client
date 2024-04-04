@@ -2,6 +2,22 @@ apiVersion: v1
 entries:
   dim:
   - apiVersion: v2
+    appVersion: 0.0.2
+    created: "2024-04-04T11:43:50.754881136Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.12.x
+    description: Helm chart for DIM Middle Layer
+    digest: 40d0e466756c0a6086184e194fedcda08a8eeed681ebb10cd3dcb080f487547b
+    home: https://github.com/catenax-ng/dim-repo
+    name: dim
+    type: application
+    urls:
+    - https://github.com/Phil91/dim-client/releases/download/dim-0.0.2/dim-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
     appVersion: 0.0.1
     created: "2024-04-02T06:52:30.30676494Z"
     dependencies:
@@ -17,4 +33,4 @@ entries:
     urls:
     - https://github.com/Phil91/dim-client/releases/download/dim-0.0.1/dim-0.0.1.tgz
     version: 0.0.1
-generated: "2024-04-02T06:52:30.306775139Z"
+generated: "2024-04-04T11:43:50.754895944Z"
