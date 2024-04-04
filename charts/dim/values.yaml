@@ -26,10 +26,10 @@ dim:
   resources:
     requests:
       cpu: 15m
-      memory: 200M
+      memory: 300M
     limits:
       cpu: 45m
-      memory: 200M
+      memory: 300M
   healthChecks:
     startup:
       path: "/health/startup"
@@ -54,10 +54,10 @@ migrations:
   resources:
     requests:
       cpu: 15m
-      memory: 105M
+      memory: 200M
     limits:
       cpu: 45m
-      memory: 105M
+      memory: 200M
   seeding:
     testDataEnvironments: ""
     testDataPaths: "Seeder/Data"
@@ -74,10 +74,10 @@ processesworker:
   resources:
     requests:
       cpu: 15m
-      memory: 105M
+      memory: 300M
     limits:
       cpu: 45m
-      memory: 105M
+      memory: 300M
   dim:
     adminMail: "mail@example.org"
     clientIdCisCentral: ""
