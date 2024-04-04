@@ -127,9 +127,9 @@ public class DimProcessTypeExecutor : IProcessTypeExecutor
                     .ConfigureAwait(false),
                 ProcessStepTypeId.CREATE_COMPANY_IDENTITY => await _dimProcessHandler.CreateCompanyIdentity(_tenantId, _tenantName, cancellationToken)
                     .ConfigureAwait(false),
-                ProcessStepTypeId.CREATE_STATUS_LIST => await _dimProcessHandler.CreateStatusList(_tenantId, cancellationToken)
-                    .ConfigureAwait(false),
                 ProcessStepTypeId.ASSIGN_COMPANY_APPLICATION => await _dimProcessHandler.AssignCompanyApplication(_tenantId, cancellationToken)
+                    .ConfigureAwait(false),
+                ProcessStepTypeId.CREATE_STATUS_LIST => await _dimProcessHandler.CreateStatusList(_tenantId, cancellationToken)
                     .ConfigureAwait(false),
                 ProcessStepTypeId.SEND_CALLBACK => await _dimProcessHandler.SendCallback(_tenantId, cancellationToken)
                     .ConfigureAwait(false),

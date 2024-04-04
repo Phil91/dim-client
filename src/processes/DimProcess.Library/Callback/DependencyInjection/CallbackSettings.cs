@@ -23,5 +23,5 @@ namespace DimProcess.Library.Callback.DependencyInjection;
 
 public class CallbackSettings : KeyVaultAuthSettings
 {
-    public string BaseAddress { get; set; }
+    public string BaseAddress { get; set; } = null!;
 }

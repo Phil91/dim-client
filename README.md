@@ -6,7 +6,7 @@ For **installation** details and further information, please refer to the chart 
 
 ## How to build and run
 
-Install the [.NET 7.0 SDK](https://www.microsoft.com/net/download).
+Install the [.NET 8.0 SDK](https://www.microsoft.com/net/download).
 
 Run the following command from the CLI:
 
