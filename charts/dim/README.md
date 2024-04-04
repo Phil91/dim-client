@@ -27,7 +27,7 @@ To use the helm chart as a dependency:
 dependencies:
   - name: dim
     repository: https://phil91.github.io/dim-client
-    version: 0.0.1
+    version: 0.0.2
 ```
 
 ## Requirements
@@ -43,7 +43,7 @@ dependencies:
 | dim.image.name | string | `"ghcr.io/phil91/dim-client_dim-service"` |  |
 | dim.image.tag | string | `""` |  |
 | dim.imagePullPolicy | string | `"IfNotPresent"` |  |
-| dim.resources | object | `{"limits":{"cpu":"45m","memory":"200M"},"requests":{"cpu":"15m","memory":"200M"}}` | We recommend to review the default resource limits as this should a conscious choice. |
+| dim.resources | object | `{"limits":{"cpu":"45m","memory":"300M"},"requests":{"cpu":"15m","memory":"300M"}}` | We recommend to review the default resource limits as this should a conscious choice. |
 | dim.healthChecks.startup.path | string | `"/health/startup"` |  |
 | dim.healthChecks.startup.tags[0].name | string | `"HEALTHCHECKS__0__TAGS__1"` |  |
 | dim.healthChecks.startup.tags[0].value | string | `"dimdb"` |  |
@@ -51,11 +51,12 @@ dependencies:
 | dim.healthChecks.readyness.path | string | `"/ready"` |  |
 | dim.swaggerEnabled | bool | `false` |  |
 | dim.rootDirectoryId | string | `"00000000-0000-0000-0000-000000000000"` |  |
+| dim.operatorId | string | `"00000000-0000-0000-0000-000000000000"` |  |
 | migrations.name | string | `"migrations"` |  |
 | migrations.image.name | string | `"ghcr.io/phil91/dim-client_dim-migrations"` |  |
 | migrations.image.tag | string | `""` |  |
 | migrations.imagePullPolicy | string | `"IfNotPresent"` |  |
-| migrations.resources | object | `{"limits":{"cpu":"45m","memory":"105M"},"requests":{"cpu":"15m","memory":"105M"}}` | We recommend to review the default resource limits as this should a conscious choice. |
+| migrations.resources | object | `{"limits":{"cpu":"45m","memory":"200M"},"requests":{"cpu":"15m","memory":"200M"}}` | We recommend to review the default resource limits as this should a conscious choice. |
 | migrations.seeding.testDataEnvironments | string | `""` |  |
 | migrations.seeding.testDataPaths | string | `"Seeder/Data"` |  |
 | migrations.logging.default | string | `"Information"` |  |
@@ -63,7 +64,7 @@ dependencies:
 | processesworker.image.name | string | `"ghcr.io/phil91/dim-client_dim-processes-worker"` |  |
 | processesworker.image.tag | string | `""` |  |
 | processesworker.imagePullPolicy | string | `"IfNotPresent"` |  |
-| processesworker.resources | object | `{"limits":{"cpu":"45m","memory":"105M"},"requests":{"cpu":"15m","memory":"105M"}}` | We recommend to review the default resource limits as this should a conscious choice. |
+| processesworker.resources | object | `{"limits":{"cpu":"45m","memory":"300M"},"requests":{"cpu":"15m","memory":"300M"}}` | We recommend to review the default resource limits as this should a conscious choice. |
 | processesworker.dim.adminMail | string | `"mail@example.org"` |  |
 | processesworker.dim.clientIdCisCentral | string | `""` |  |
 | processesworker.dim.clientSecretCisCentral | string | `""` |  |
@@ -106,7 +107,7 @@ dependencies:
 | externalDatabase.database | string | `"dim"` | Database name. |
 | externalDatabase.password | string | `""` | Password for the non-root username (default 'dim'). Secret-key 'password'. |
 | externalDatabase.existingSecret | string | `"dim-external-db"` | Secret containing the password non-root username, (default 'dim'). |
-| idp | object | `{"address":"https://centralidp.example.org","authRealm":"CX-Central","jwtBearerOptions":{"metadataPath":"/auth/realms/CX-Central/.well-known/openid-configuration","refreshInterval":"00:00:30","requireHttpsMetadata":"true","tokenValidationParameters":{"validAudience":"Cl25-CX-Dim","validIssuerPath":"/auth/realms/CX-Central"}},"tokenPath":"/auth/realms/CX-Central/protocol/openid-connect/token","useAuthTrail":true}` | Provide details about idp instance. |
+| idp | object | `{"address":"https://centralidp.example.org","authRealm":"CX-Central","jwtBearerOptions":{"metadataPath":"/auth/realms/CX-Central/.well-known/openid-configuration","refreshInterval":"00:00:30","requireHttpsMetadata":"true","tokenValidationParameters":{"validAudience":"DIM-Middle-Layer","validIssuerPath":"/auth/realms/CX-Central"}},"tokenPath":"/auth/realms/CX-Central/protocol/openid-connect/token","useAuthTrail":true}` | Provide details about idp instance. |
 | idp.address | string | `"https://centralidp.example.org"` | Provide idp base address, without trailing '/auth'. |
 | idp.useAuthTrail | bool | `true` | Flag if the api should be used with an leading /auth path |
 | ingress.enabled | bool | `false` | DIM ingress parameters, enable ingress record generation for dim. |
