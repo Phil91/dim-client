@@ -51,7 +51,7 @@ processesworker:
     default: "Debug"
   dim:
     adminMail: "phil.schneider@digitalnativesolutions.de"
-    clientIdCisCentral: "<path:portal/data/dim/int/dim#cisClientId"
+    clientIdCisCentral: "<path:portal/data/dim/int/dim#cisClientId>"
     clientSecretCisCentral: "<path:portal/data/dim/int/dim#cisClientSecret>"
     authUrl: "https://catena-x-int-dim.authentication.eu10.hana.ondemand.com"
   subaccount:
