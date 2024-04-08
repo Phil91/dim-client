@@ -34,7 +34,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Flurl.Http.Signed" Version="4.0.2" />
+      <PackageReference Include="Flurl.Http.Signed" Version="3.2.4" />
     </ItemGroup>
 
 </Project>
