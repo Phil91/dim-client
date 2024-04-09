@@ -121,7 +121,7 @@ public class CfClient : ICfClient
                                                    x.BrokerCatalog?.BrokerCatalogMetadata?.AutoSubscription?.AppName == servicePlanName);
             if (servicePlans.Count() != 1)
             {
-                throw new ServiceException($"There must be exactly one service plan with name {servicePlanName} and type {servicePlanType}");
+                throw new ServiceException($"There must be exactly one service plan with name {servicePlanName} and type {servicePlanType}", isRecoverable: !servicePlans.Any());
             }
 
             return servicePlans.Single().Id;
@@ -152,7 +152,7 @@ public class CfClient : ICfClient
             var spaces = response.Resources.Where(x => x.Name == spaceName);
             if (spaces.Count() != 1)
             {
-                throw new ServiceException($"There must be exactly one space with name {spaceName}");
+                throw new ServiceException($"There must be exactly one space with name {spaceName}", isRecoverable: !spaces.Any());
             }
 
             return spaces.Single().Id;
@@ -197,7 +197,7 @@ public class CfClient : ICfClient
             var resources = response.Resources.Where(x => x.Name == name && x.Type == "managed" && (spaceId == null || x.Relationships.Space.Data.Id == spaceId.Value) && x.LastOperation.State == "succeeded");
             if (resources.Count() != 1)
             {
-                throw new ServiceException($"There must be exactly one service instance");
+                throw new ServiceException("There must be exactly one service instance", isRecoverable: !resources.Any());
             }
 
             return resources.Single().Id;
@@ -241,7 +241,7 @@ public class CfClient : ICfClient
             var resources = response.Resources.Where(x => x.Relationships.ServiceInstance.Data.Id == serviceInstanceId);
             if (resources.Count() != 1)
             {
-                throw new ServiceException($"There must be exactly one service credential binding");
+                throw new ServiceException("There must be exactly one service credential binding", isRecoverable: !resources.Any());
             }
 
             return resources.Single().Id;
@@ -265,7 +265,7 @@ public class CfClient : ICfClient
 
             if (response == null)
             {
-                throw new ServiceException($"There must be exactly one service instance");
+                throw new ServiceException("There must be exactly one service instance", isRecoverable: true);
             }
 
             return response;
