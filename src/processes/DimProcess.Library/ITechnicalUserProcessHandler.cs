@@ -17,32 +17,13 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-namespace Dim.Entities.Enums;
+using Dim.Entities.Enums;
 
-public enum ProcessStepTypeId
+namespace DimProcess.Library;
+
+public interface ITechnicalUserProcessHandler
 {
-    // Setup Dim Process
-    CREATE_SUBACCOUNT = 1,
-    CREATE_SERVICEMANAGER_BINDINGS = 2,
-    ASSIGN_ENTITLEMENTS = 3,
-    CREATE_SERVICE_INSTANCE = 4,
-    CREATE_SERVICE_BINDING = 5,
-    SUBSCRIBE_APPLICATION = 6,
-    CREATE_CLOUD_FOUNDRY_ENVIRONMENT = 7,
-    CREATE_CLOUD_FOUNDRY_SPACE = 8,
-    ADD_SPACE_MANAGER_ROLE = 9,
-    ADD_SPACE_DEVELOPER_ROLE = 10,
-    CREATE_DIM_SERVICE_INSTANCE = 11,
-    CREATE_SERVICE_INSTANCE_BINDING = 12,
-    GET_DIM_DETAILS = 13,
-    CREATE_APPLICATION = 14,
-    CREATE_COMPANY_IDENTITY = 15,
-    ASSIGN_COMPANY_APPLICATION = 16,
-    CREATE_STATUS_LIST = 17,
-    SEND_CALLBACK = 18,
-
-    // Create Technical User
-    CREATE_TECHNICAL_USER = 100,
-    GET_TECHNICAL_USER_DATA = 101,
-    SEND_TECHNICAL_USER_CALLBACK = 102,
+    Task<(IEnumerable<ProcessStepTypeId>? nextStepTypeIds, ProcessStepStatusId stepStatusId, bool modified, string? processMessage)> CreateServiceInstanceBindings(string tenantName, Guid technicalUserId, CancellationToken cancellationToken);
+    Task<(IEnumerable<ProcessStepTypeId>? nextStepTypeIds, ProcessStepStatusId stepStatusId, bool modified, string? processMessage)> GetTechnicalUserData(string tenantName, Guid technicalUserId, CancellationToken cancellationToken);
+    Task<(IEnumerable<ProcessStepTypeId>? nextStepTypeIds, ProcessStepStatusId stepStatusId, bool modified, string? processMessage)> SendCallback(Guid technicalUserId, CancellationToken cancellationToken);
 }
