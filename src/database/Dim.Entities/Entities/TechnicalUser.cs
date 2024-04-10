@@ -17,32 +17,25 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-namespace Dim.Entities.Enums;
+namespace Dim.Entities.Entities;
 
-public enum ProcessStepTypeId
+public class TechnicalUser(
+    Guid id,
+    Guid tenantId,
+    Guid externalId,
+    string technicalUserName,
+    Guid processId)
 {
-    // Setup Dim Process
-    CREATE_SUBACCOUNT = 1,
-    CREATE_SERVICEMANAGER_BINDINGS = 2,
-    ASSIGN_ENTITLEMENTS = 3,
-    CREATE_SERVICE_INSTANCE = 4,
-    CREATE_SERVICE_BINDING = 5,
-    SUBSCRIBE_APPLICATION = 6,
-    CREATE_CLOUD_FOUNDRY_ENVIRONMENT = 7,
-    CREATE_CLOUD_FOUNDRY_SPACE = 8,
-    ADD_SPACE_MANAGER_ROLE = 9,
-    ADD_SPACE_DEVELOPER_ROLE = 10,
-    CREATE_DIM_SERVICE_INSTANCE = 11,
-    CREATE_SERVICE_INSTANCE_BINDING = 12,
-    GET_DIM_DETAILS = 13,
-    CREATE_APPLICATION = 14,
-    CREATE_COMPANY_IDENTITY = 15,
-    ASSIGN_COMPANY_APPLICATION = 16,
-    CREATE_STATUS_LIST = 17,
-    SEND_CALLBACK = 18,
-
-    // Create Technical User
-    CREATE_TECHNICAL_USER = 100,
-    GET_TECHNICAL_USER_DATA = 101,
-    SEND_TECHNICAL_USER_CALLBACK = 102,
+    public Guid Id { get; set; } = id;
+    public Guid TenantId { get; set; } = tenantId;
+    public Guid ExternalId { get; set; } = externalId;
+    public string TechnicalUserName { get; set; } = technicalUserName;
+    public string? TokenAddress { get; set; }
+    public string? ClientId { get; set; }
+    public byte[]? ClientSecret { get; set; }
+    public byte[]? InitializationVector { get; set; }
+    public int? EncryptionMode { get; set; }
+    public Guid ProcessId { get; set; } = processId;
+    public virtual Tenant? Tenant { get; set; }
+    public virtual Process? Process { get; set; }
 }
