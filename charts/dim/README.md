@@ -27,7 +27,7 @@ To use the helm chart as a dependency:
 dependencies:
   - name: dim
     repository: https://phil91.github.io/dim-client
-    version: 0.0.2
+    version: 0.0.3
 ```
 
 ## Requirements
