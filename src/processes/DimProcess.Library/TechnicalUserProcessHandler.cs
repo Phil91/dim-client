@@ -64,7 +64,7 @@ public class TechnicalUserProcessHandler(
 
         var dimInstanceId = await cfClient.GetServiceBinding(tenantName, spaceId.Value, $"{technicalUserName}-dim-key01", cancellationToken).ConfigureAwait(false);
         var dimDetails = await cfClient.GetServiceBindingDetails(dimInstanceId, cancellationToken).ConfigureAwait(false);
-        
+
         var cryptoConfig = _settings.EncryptionConfigs.SingleOrDefault(x => x.Index == _settings.EncryptionConfigIndex) ?? throw new ConfigurationException($"encryptionConfigIndex {_settings.EncryptionConfigIndex} is not configured");
         var (secret, initializationVector) = CryptoHelper.Encrypt(dimDetails.Credentials.Uaa.ClientSecret, Convert.FromHexString(cryptoConfig.EncryptionKey), cryptoConfig.CipherMode, cryptoConfig.PaddingMode);
 
