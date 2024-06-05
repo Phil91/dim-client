@@ -42,7 +42,7 @@ dim:
     tag: "main"
   imagePullPolicy: "Always"
   swaggerEnabled: true
-  rootDirectoryId: "27fee02a-e265-4cfc-af70-4f217a33840b"
+  rootDirectoryId: "659ee544-2898-4e41-8db8-d469c5eb4e90"
   operatorId: "27fee02a-e265-4cfc-af70-4f217a33840b"
 
 migrations:
@@ -62,7 +62,7 @@ processesworker:
     adminMail: "phil.schneider@digitalnativesolutions.de"
     clientIdCisCentral: "<path:portal/data/dim/dev/dim#cisClientId>"
     clientSecretCisCentral: "<path:portal/data/dim/dev/dim#cisClientSecret>"
-    authUrl: "https://catena-x-int-dim.authentication.eu10.hana.ondemand.com"
+    authUrl: "https://catena-x-dev-dim.authentication.eu10.hana.ondemand.com"
   subaccount:
     # -- Url to the subaccount service api
     baseUrl: "https://accounts-service.cfapps.eu10.hana.ondemand.com"
