@@ -38,7 +38,7 @@ on:
       upgrade_from:
         description: 'dim chart version to upgrade from'
         # tbd
-        default: 'tbd'
+        default: '0.0.7'
         required: false
         type: string
 
@@ -113,9 +113,9 @@ jobs:
 
       - name: Run chart-testing (install)
         run: ct install --charts charts/dim --config charts/chart-testing-config.yaml --helm-extra-set-args "--set dim.image.name=kind-registry:5000/dim-service --set dim.image.tag=testing --set migrations.image.name=kind-registry:5000/dim-migrations --set migrations.image.tag=testing --set processesworker.image.name=kind-registry:5000/dim-processes-worker --set processesworker.image.tag=testing"
-        if: github.event_name != 'pull_request' || steps.list-changed.outputs.changed == 'true'
+        if: github.event_name != 'pull_request' || steps.list-changed.outputs
+      # TODO: re-add the step after the first version release  .changed == 'true'
 
-      # TODO: re-add the step after the first version release  
       # Upgrade the released chart version with the locally available chart
       # default value for event_name != workflow_dispatch
       # - name: Run helm upgrade
