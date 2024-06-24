@@ -27,15 +27,15 @@ using System.Collections.Immutable;
 
 namespace DimProcess.Executor;
 
-public class TechnicalUserProcessTypeExecutor(
+public class TechnicalUserCreationProcessTypeExecutor(
     IDimRepositories dimRepositories,
-    ITechnicalUserProcessHandler technicalUserProcessHandler)
+    ITechnicalUserCreationProcessHandler technicalUserCreationProcessHandler)
     : IProcessTypeExecutor
 {
     private readonly IEnumerable<ProcessStepTypeId> _executableProcessSteps = ImmutableArray.Create(
         ProcessStepTypeId.CREATE_TECHNICAL_USER,
         ProcessStepTypeId.GET_TECHNICAL_USER_DATA,
-        ProcessStepTypeId.SEND_TECHNICAL_USER_CALLBACK);
+        ProcessStepTypeId.SEND_TECHNICAL_USER_CREATION_CALLBACK);
 
     private Guid _technicalUserId;
     private string? _tenantName;
@@ -74,11 +74,11 @@ public class TechnicalUserProcessTypeExecutor(
         {
             (nextStepTypeIds, stepStatusId, modified, processMessage) = processStepTypeId switch
             {
-                ProcessStepTypeId.CREATE_TECHNICAL_USER => await technicalUserProcessHandler.CreateServiceInstanceBindings(_tenantName, _technicalUserId, cancellationToken)
+                ProcessStepTypeId.CREATE_TECHNICAL_USER => await technicalUserCreationProcessHandler.CreateServiceInstanceBindings(_tenantName, _technicalUserId, cancellationToken)
                     .ConfigureAwait(false),
-                ProcessStepTypeId.GET_TECHNICAL_USER_DATA => await technicalUserProcessHandler.GetTechnicalUserData(_tenantName, _technicalUserId, cancellationToken)
+                ProcessStepTypeId.GET_TECHNICAL_USER_DATA => await technicalUserCreationProcessHandler.GetTechnicalUserData(_tenantName, _technicalUserId, cancellationToken)
                     .ConfigureAwait(false),
-                ProcessStepTypeId.SEND_TECHNICAL_USER_CALLBACK => await technicalUserProcessHandler.SendCallback(_technicalUserId, cancellationToken)
+                ProcessStepTypeId.SEND_TECHNICAL_USER_CREATION_CALLBACK => await technicalUserCreationProcessHandler.SendCallback(_technicalUserId, cancellationToken)
                     .ConfigureAwait(false),
                 _ => (null, ProcessStepStatusId.TODO, false, null)
             };

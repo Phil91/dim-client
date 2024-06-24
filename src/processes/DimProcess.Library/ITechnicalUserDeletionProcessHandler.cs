@@ -17,16 +17,12 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-using Dim.Web.Models;
-using Org.Eclipse.TractusX.Portal.Backend.Framework.DependencyInjection;
+using Dim.Entities.Enums;
 
-namespace Dim.Web.BusinessLogic;
+namespace DimProcess.Library;
 
-public interface IDimBusinessLogic : ITransient
+public interface ITechnicalUserDeletionProcessHandler
 {
-    Task StartSetupDim(string companyName, string bpn, string didDocumentLocation, bool isIssuer);
-    Task<string> GetStatusList(string bpn, CancellationToken cancellationToken);
-    Task<string> CreateStatusList(string bpn, CancellationToken cancellationToken);
-    Task CreateTechnicalUser(string bpn, TechnicalUserData technicalUserData, CancellationToken cancellationToken);
-    Task DeleteTechnicalUser(string bpn, TechnicalUserData technicalUserData, CancellationToken cancellationToken);
+    Task<(IEnumerable<ProcessStepTypeId>? nextStepTypeIds, ProcessStepStatusId stepStatusId, bool modified, string? processMessage)> DeleteServiceInstanceBindings(string tenantName, Guid technicalUserId, CancellationToken cancellationToken);
+    Task<(IEnumerable<ProcessStepTypeId>? nextStepTypeIds, ProcessStepStatusId stepStatusId, bool modified, string? processMessage)> SendCallback(Guid technicalUserId, CancellationToken cancellationToken);
 }
