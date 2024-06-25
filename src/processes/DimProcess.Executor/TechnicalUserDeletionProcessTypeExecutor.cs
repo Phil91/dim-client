@@ -75,7 +75,7 @@ public class TechnicalUserDeletionProcessTypeExecutor(
             {
                 ProcessStepTypeId.DELETE_TECHNICAL_USER => await technicalUserDeletionProcessHandler.DeleteServiceInstanceBindings(_tenantName, _technicalUserId, cancellationToken)
                     .ConfigureAwait(false),
-                ProcessStepTypeId.SEND_TECHNICAL_USER_CREATION_CALLBACK => await technicalUserDeletionProcessHandler.SendCallback(_technicalUserId, cancellationToken)
+                ProcessStepTypeId.SEND_TECHNICAL_USER_DELETION_CALLBACK => await technicalUserDeletionProcessHandler.SendCallback(_technicalUserId, cancellationToken)
                     .ConfigureAwait(false),
                 _ => (null, ProcessStepStatusId.TODO, false, null)
             };

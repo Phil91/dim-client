@@ -25,6 +25,7 @@ using DimProcess.Library.Callback;
 using DimProcess.Library.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Org.Eclipse.TractusX.Portal.Backend.Framework.ErrorHandling;
+using Org.Eclipse.TractusX.Portal.Backend.Framework.Models.Configuration;
 using Org.Eclipse.TractusX.Portal.Backend.Framework.Models.Encryption;
 
 namespace DimProcess.Library;
@@ -65,8 +66,8 @@ public class TechnicalUserCreationProcessHandler(
         var dimInstanceId = await cfClient.GetServiceBinding(tenantName, spaceId.Value, $"{technicalUserName}-dim-key01", cancellationToken).ConfigureAwait(false);
         var dimDetails = await cfClient.GetServiceBindingDetails(dimInstanceId, cancellationToken).ConfigureAwait(false);
 
-        var cryptoConfig = _settings.EncryptionConfigs.SingleOrDefault(x => x.Index == _settings.EncryptionConfigIndex) ?? throw new ConfigurationException($"encryptionConfigIndex {_settings.EncryptionConfigIndex} is not configured");
-        var (secret, initializationVector) = CryptoHelper.Encrypt(dimDetails.Credentials.Uaa.ClientSecret, Convert.FromHexString(cryptoConfig.EncryptionKey), cryptoConfig.CipherMode, cryptoConfig.PaddingMode);
+        var cryptoHelper = _settings.EncryptionConfigs.GetCryptoHelper(_settings.EncryptionConfigIndex);
+        var (secret, initializationVector) = cryptoHelper.Encrypt(dimDetails.Credentials.Uaa.ClientSecret);
 
         dimRepositories.GetInstance<ITenantRepository>().AttachAndModifyTechnicalUser(technicalUserId, technicalUser =>
             {
@@ -93,7 +94,7 @@ public class TechnicalUserCreationProcessHandler(
 
     public async Task<(IEnumerable<ProcessStepTypeId>? nextStepTypeIds, ProcessStepStatusId stepStatusId, bool modified, string? processMessage)> SendCallback(Guid technicalUserId, CancellationToken cancellationToken)
     {
-        var (externalId, tokenAddress, clientId, clientSecret, initializationVector, encryptionMode) = await dimRepositories.GetInstance<ITenantRepository>().GetTechnicalUserCallbackData(technicalUserId).ConfigureAwait(false);
+        var (externalId, tokenAddress, clientId, clientSecret, initializationVector, _) = await dimRepositories.GetInstance<ITenantRepository>().GetTechnicalUserCallbackData(technicalUserId).ConfigureAwait(false);
 
         if (string.IsNullOrWhiteSpace(clientId))
         {
@@ -105,7 +106,13 @@ public class TechnicalUserCreationProcessHandler(
             throw new ConflictException("TokenAddress must not be null");
         }
 
-        var secret = Decrypt(clientSecret, initializationVector, encryptionMode);
+        if (clientSecret == null)
+        {
+            throw new ConflictException("clientSecret must be set");
+        }
+
+        var cryptoHelper = _settings.EncryptionConfigs.GetCryptoHelper(_settings.EncryptionConfigIndex);
+        var secret = cryptoHelper.Decrypt(clientSecret, initializationVector);
 
         await callbackService.SendTechnicalUserCallback(externalId, tokenAddress, clientId, secret, cancellationToken).ConfigureAwait(false);
 
@@ -114,22 +121,5 @@ public class TechnicalUserCreationProcessHandler(
             ProcessStepStatusId.DONE,
             false,
             null);
-    }
-
-    private string Decrypt(byte[]? clientSecret, byte[]? initializationVector, int? encryptionMode)
-    {
-        if (clientSecret == null)
-        {
-            throw new ConflictException("ClientSecret must not be null");
-        }
-
-        if (encryptionMode == null)
-        {
-            throw new ConflictException("EncryptionMode must not be null");
-        }
-
-        var cryptoConfig = _settings.EncryptionConfigs.SingleOrDefault(x => x.Index == encryptionMode) ?? throw new ConfigurationException($"EncryptionModeIndex {encryptionMode} is not configured");
-
-        return CryptoHelper.Decrypt(clientSecret, initializationVector, Convert.FromHexString(cryptoConfig.EncryptionKey), cryptoConfig.CipherMode, cryptoConfig.PaddingMode);
     }
 }
