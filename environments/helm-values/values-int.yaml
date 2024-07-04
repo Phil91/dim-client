@@ -74,7 +74,7 @@ processesworker:
     # -- Provide client-id for callback.
     clientId: "<path:portal/data/dim/callback#clientId>"
     # -- Client-secret for callback client-id. Secret-key 'callback-client-secret'.
-    clientSecret: "<path:portal/data/int/iam/centraidp-client-secrets#dim-portal-sa>"
+    clientSecret: "<path:portal/data/int/iam/centralidp-client-secrets#dim-portal-sa>"
     tokenAddress: "http://centralidp.int.catena-x.net/auth/realms/CX-Central/protocol/openid-connect/token"
     # -- Url to the cf service api
     baseAddress: "https://portal-backend.int.catena-x.net"
