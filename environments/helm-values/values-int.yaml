@@ -40,8 +40,8 @@ ingress:
 
 dim:
   swaggerEnabled: true
-  rootDirectoryId: "27fee02a-e265-4cfc-af70-4f217a33840b"
-  operatorId: "27fee02a-e265-4cfc-af70-4f217a33840b"
+  rootDirectoryId: "d6cd4e2e-1053-4ba6-888e-1cd56509958a"
+  operatorId: "d6cd4e2e-1053-4ba6-888e-1cd56509958a"
 
 migrations:
   logging:
@@ -54,7 +54,7 @@ processesworker:
     adminMail: "phil.schneider@digitalnativesolutions.de"
     clientIdCisCentral: "<path:portal/data/dim/int/dim#cisClientId>"
     clientSecretCisCentral: "<path:portal/data/dim/int/dim#cisClientSecret>"
-    authUrl: ""
+    authUrl: "https://catena-x-int-div.authentication.eu10.hana.ondemand.com"
   subaccount:
     # -- Url to the subaccount service api
     baseUrl: "https://accounts-service.cfapps.eu10.hana.ondemand.com"
