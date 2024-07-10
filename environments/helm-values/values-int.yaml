@@ -51,7 +51,7 @@ processesworker:
   logging:
     default: "Debug"
   dim:
-    adminMail: "phil.schneider@digitalnativesolutions.de"
+    adminMail: "<path:portal/data/dim/int/dim#adminMail>"
     clientIdCisCentral: "<path:portal/data/dim/int/dim#cisClientId>"
     clientSecretCisCentral: "<path:portal/data/dim/int/dim#cisClientSecret>"
     authUrl: "https://catena-x-int-div.authentication.eu10.hana.ondemand.com"
