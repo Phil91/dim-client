@@ -30,8 +30,8 @@ using System.Text.Json.Serialization;
 
 const string Version = "v1";
 
-WebApplicationBuildRunner
-    .BuildAndRunWebApplication<Program>(args, "dim", Version, "dim",
+await WebApplicationBuildRunner
+    .BuildAndRunWebApplicationAsync<Program>(args, "dim", Version, "dim",
         builder =>
         {
             builder.Services
@@ -56,4 +56,4 @@ WebApplicationBuildRunner
             app.MapGroup("/api")
                 .WithOpenApi()
                 .MapDimApi();
-        });
+        }).ConfigureAwait(ConfigureAwaitOptions.None);

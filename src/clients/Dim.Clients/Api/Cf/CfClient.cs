@@ -78,8 +78,8 @@ public class CfClient : ICfClient
             .ReadFromJsonAsync<GetEnvironmentsResponse>(JsonSerializerExtensions.Options, cancellationToken)
             .ConfigureAwait(false);
 
-        var tenantEnvironment = environments.Resources.Where(x => x.Name == tenantName);
-        if (tenantEnvironment.Count() > 1)
+        var tenantEnvironment = environments?.Resources.Where(x => x.Name == tenantName);
+        if (tenantEnvironment == null || tenantEnvironment.Count() > 1)
         {
             throw new ConflictException($"There should only be one cf environment for tenant {tenantName}");
         }
